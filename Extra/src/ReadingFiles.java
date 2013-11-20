@@ -19,6 +19,8 @@ public class ReadingFiles
         Scanner input = new Scanner(System.in);
      
    
+        //asdfasdfasdf test push
+        
     	//System.out.println("Please enter root path:");
     	//String root = input.nextLine();
        /**
@@ -98,7 +100,7 @@ public class ReadingFiles
     	{
     		System.out.println("Directory: " +Directory[k]);
     		
-    		for (int l = 0; l <listOfFiles.length; l++)
+    		for (int l = 0; l <listOfFiles.length; l++) 
     		{
     			if (listOfFiles[l].isFile() && listOfFiles[l].getParentFile().getName() == Directory[k])
     			{
