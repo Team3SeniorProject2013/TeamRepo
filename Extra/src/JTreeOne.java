@@ -11,8 +11,9 @@ public class JTreeOne {
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY");
 	static int rootcounter=0;
 	static JTree tree;
-	static DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root");
+	static DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("RootNode");
 	static DefaultMutableTreeNode tempNode = rootNode;
+	static DefaultMutableTreeNode tempNode2 = tempNode;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -30,9 +31,7 @@ public class JTreeOne {
     	//String root = "C:\\Users\\Quang\\Documents\\Dropbox\\9) Fall 2013\\Software Engineering Project\\testFiles";
     	File rootFolder = new File(root);
 
-
-    	searchFile (root);
-    	tree = new JTree(rootNode);
+    	tree = new JTree(bundleDirectory(root));
     	JFrame frame = new JFrame ("TreeTest");
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	JScrollPane treeView = new JScrollPane(tree);
@@ -42,65 +41,48 @@ public class JTreeOne {
     	frame.setVisible(true);
 
 	}
+	
+	private static DefaultMutableTreeNode bundleDirectory(String sbr)
+	{
+		File folder = new File(sbr); 
+	    File[] listOfFiles = folder.listFiles();
 
-	public static void searchFile (String root) // input path and displays file names
-    {
-	  File folder = new File(root); //creates new root file
-      File[] listOfFiles = folder.listFiles();
-      String subRoot = "";
-
-
-      for (int i = 0; i < listOfFiles.length; i++)
-      {
-    	  DefaultMutableTreeNode directoryNode = null;
-          DefaultMutableTreeNode fileNode = null;
-          /*if (listOfFiles[i].isFile())
-          {
-              System.out.println("File:\t" + listOfFiles[i].getName()); 						//displays name of file
-              //System.out.println("Path:\t" + listOfFiles[i].getPath());						//displays file path
-              //System.out.println("Parent:\t" + listOfFiles[i].getParentFile());				//displays directory path
-              System.out.println("Parent:\t" + listOfFiles[i].getParentFile().getName());		// display parent file name
-              System.out.println("Size:\t"+listOfFiles[i].length()+"kb");						//display file size
-              System.out.println("Date Modified:\t"+ dateFormat.format(listOfFiles[i].lastModified())); //display date modified
-              System.out.println(" ");
-
-          }
-          else if (listOfFiles[i].isDirectory())
-          {
-              subRoot = listOfFiles[i].getName();
-        	  System.out.println("Subdirectory:\t" + subRoot);
-              searchFile (root + "\\"+subRoot); //if it is a directory, recursively search sub directory
-
-          }*/
-    	  if (listOfFiles[i].isDirectory())
-          {
-    		  directoryNode = new DefaultMutableTreeNode(listOfFiles[i].getName());
-    		  rootNode.add(directoryNode);;
-    		  tempNode = directoryNode;
-
-              subRoot = listOfFiles[i].getName();
-        	  System.out.println("Subdirectory:\t" + subRoot);
-              searchFile (root + "\\"+subRoot); //if it is a directory, recursively search sub directory
-
-          }
-          else if (listOfFiles[i].isFile())
-          {
-        	  fileNode = new DefaultMutableTreeNode(listOfFiles[i].getName());
-        	  tempNode.add(fileNode);						// @@@PLACEHOLDER@@@
-        	  //directoryNode.add(fileNode);				// doesn't work because directoryNode is null
-
-        	  System.out.println("File:\t" + listOfFiles[i].getName()); 						//displays name of file
-              //System.out.println("Path:\t" + listOfFiles[i].getPath());						//displays file path
-              //System.out.println("Parent:\t" + listOfFiles[i].getParentFile());				//displays directory path
-              System.out.println("Parent:\t" + listOfFiles[i].getParentFile().getName());		// display parent file name
-              System.out.println("Size:\t"+listOfFiles[i].length()+"kb");						//display file size
-              System.out.println("Date Modified:\t"+ dateFormat.format(listOfFiles[i].lastModified())); //display date modified
-              System.out.println(" ");
-
-          }
-      }
-      rootNode.add(tempNode);;
-
-    }
-
+	    DefaultMutableTreeNode subNode = new DefaultMutableTreeNode(getFolderName(sbr));
+	    
+	    for (int i = 0; i < listOfFiles.length; i++)
+	    {
+	    	DefaultMutableTreeNode fileNode = null;
+	    	
+	    	System.out.println(listOfFiles[i].getPath());
+	    	
+	    	if (listOfFiles[i].isDirectory())
+	        {
+	        	subNode.add(bundleDirectory(listOfFiles[i].getPath()));
+	        }
+	    	else
+	    	{
+	    		fileNode = new DefaultMutableTreeNode(listOfFiles[i].getName());
+	    		subNode.add(fileNode);
+	    	}   
+	        
+	    }
+	    
+		return subNode;
+	}
+	
+	private static String getFolderName(String directory)
+	{
+		Scanner delim = new Scanner(directory).useDelimiter("\\\\");
+		
+		String foldername = ""; 
+		while(delim.hasNext())
+		{
+			foldername = delim.next();
+		}
+		
+		delim.close();	
+		
+		return foldername;
+	}
+	
 }
