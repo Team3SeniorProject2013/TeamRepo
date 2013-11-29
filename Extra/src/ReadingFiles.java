@@ -117,7 +117,7 @@ public class ReadingFiles
       String subRoot = "";
       
       String [] Directory = new String [listOfFiles.length];
-      DirectoryNum = 0;
+      int DirectoryNum = 0;
       
       for (int i = 0; i < listOfFiles.length; i++) 
       {
