@@ -17,6 +17,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
 import javax.swing.AbstractListModel;
 import java.awt.Font;
+import javax.swing.JTextArea;
+import javax.swing.border.BevelBorder;
+import javax.swing.JTree;
 
 
 public class Tabexample extends JFrame {
@@ -24,6 +27,7 @@ public class Tabexample extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -66,7 +70,12 @@ public class Tabexample extends JFrame {
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnBrowse = new JButton("Browse");
+		JButton btnBrowse = new JButton("Ok");
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnBrowse.setBounds(344, 42, 89, 23);
 		panel.add(btnBrowse);
 		
@@ -92,7 +101,8 @@ public class Tabexample extends JFrame {
 		panel.add(btnNewButton);
 		
 		JList list = new JList();
-		list.setBounds(233, 117, 226, 274);
+		list.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		list.setBounds(233, 117, 226, 268);
 		panel.add(list);
 		
 		JButton btnNewButton_1 = new JButton("Edit");
@@ -102,6 +112,8 @@ public class Tabexample extends JFrame {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				System.out.println("hello");
 			}
 		});
 		btnDelete.setBounds(344, 391, 89, 23);
@@ -111,8 +123,35 @@ public class Tabexample extends JFrame {
 		btnSubmit_1.setBounds(10, 390, 89, 23);
 		panel.add(btnSubmit_1);
 		
+		JTree tree = new JTree();
+		tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		tree.setBounds(10, 117, 216, 268);
+		panel.add(tree);
+		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Search", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JLabel lblSearchResult = new JLabel("Search Result");
+		lblSearchResult.setBounds(10, 11, 101, 14);
+		panel_1.add(lblSearchResult);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(10, 36, 178, 20);
+		panel_1.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JButton btnSearcg = new JButton("Search");
+		btnSearcg.setBounds(192, 35, 89, 23);
+		panel_1.add(btnSearcg);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setBounds(291, 35, 89, 23);
+		panel_1.add(btnRefresh);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(10, 67, 271, 335);
+		panel_1.add(textArea);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("List", null, panel_2, null);
@@ -134,15 +173,37 @@ public class Tabexample extends JFrame {
 			}
 		});
 		list_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		list_2.setBounds(386, 25, 73, 388);
+		list_2.setBounds(386, 25, 73, 350);
 		panel_2.add(list_2);
 		
 		JButton btnSubmit_2 = new JButton("Submit");
 		btnSubmit_2.setBounds(0, 390, 89, 23);
 		panel_2.add(btnSubmit_2);
 		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(10, 25, 366, 350);
+		panel_2.add(textArea_1);
+		
+		JLabel lblList = new JLabel("List");
+		lblList.setBounds(10, 11, 46, 14);
+		panel_2.add(lblList);
+		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Recent", null, panel_3, null);
+		panel_3.setLayout(null);
+		
+		JButton btnSubmit_3 = new JButton("Submit");
+		btnSubmit_3.setBounds(10, 390, 89, 23);
+		panel_3.add(btnSubmit_3);
+		
+		JList list_3 = new JList();
+		list_3.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		list_3.setBounds(10, 30, 320, 328);
+		panel_3.add(list_3);
+		
+		JLabel lblRecentSearch = new JLabel("Recent Search");
+		lblRecentSearch.setBounds(10, 11, 119, 14);
+		panel_3.add(lblRecentSearch);
 		
 		JPanel panel_4 = new JPanel();
 		tabbedPane.addTab("Bookmark", null, panel_4, null);
@@ -153,6 +214,7 @@ public class Tabexample extends JFrame {
 		panel_4.add(lblBookmarkedTags);
 		
 		JList list_1 = new JList();
+		list_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		list_1.setBounds(10, 42, 200, 349);
 		panel_4.add(list_1);
 		
