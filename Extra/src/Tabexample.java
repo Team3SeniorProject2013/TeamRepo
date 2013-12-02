@@ -25,8 +25,8 @@ import javax.swing.JTree;
 public class Tabexample extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField SelectRootDirtextField;
+	private JTextField AddTagstextField_1;
 	private JTextField textField_2;
 
 	/**
@@ -65,14 +65,16 @@ public class Tabexample extends JFrame {
 		tabbedPane.addTab("Tags", null, panel, null);
 		panel.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 43, 335, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		SelectRootDirtextField = new JTextField();
+		SelectRootDirtextField.setBounds(10, 43, 335, 20);
+		panel.add(SelectRootDirtextField);
+		SelectRootDirtextField.setColumns(10);
 		
 		JButton btnBrowse = new JButton("Ok");
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(SelectRootDirtextField.getText());
+				
 				
 			}
 		});
@@ -91,10 +93,10 @@ public class Tabexample extends JFrame {
 		lblNewLabel_1.setBounds(20, 76, 143, 14);
 		panel.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(236, 92, 134, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		AddTagstextField_1 = new JTextField();
+		AddTagstextField_1.setBounds(236, 92, 134, 20);
+		panel.add(AddTagstextField_1);
+		AddTagstextField_1.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Add tag");
 		btnNewButton.setBounds(370, 91, 89, 23);
