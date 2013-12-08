@@ -6,10 +6,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import java.awt.Label;
+
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.RootPaneContainer;
+
 import java.awt.Color;
 import java.awt.Button;
 import java.awt.event.ActionListener;
@@ -17,11 +21,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
 import javax.swing.AbstractListModel;
 import java.awt.Font;
+import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.JScrollBar;
 
 //changes
 public class KnowledgeManagerGUI extends JFrame {
@@ -30,29 +38,24 @@ public class KnowledgeManagerGUI extends JFrame {
 	private JTextField SelectRootDirtextField;
 	private JTextField AddTagstextField_1;
 	private JTextField textField_2;
-
+	String root;
+	JTree tree;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		
-		//JTreeOne jtree = new JTreeOne();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					KnowledgeManagerGUI frame = new KnowledgeManagerGUI(JTreeOne.getJTreeDirectory("C:\\Users\\Shalan\\Desktop\\TESTDOCS"));
+		
+					KnowledgeManagerGUI frame = new KnowledgeManagerGUI();
 					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+			
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public KnowledgeManagerGUI(JTree tree) {
+	@SuppressWarnings("serial")
+	public KnowledgeManagerGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 500);
 		contentPane = new JPanel();
@@ -63,7 +66,7 @@ public class KnowledgeManagerGUI extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		
 		
 		tabbedPane.addTab("Tags", null, panel, null);
@@ -75,9 +78,28 @@ public class KnowledgeManagerGUI extends JFrame {
 		SelectRootDirtextField.setColumns(10);
 		
 		JButton btnBrowse = new JButton("Ok");
+		//String root;// = "C:\\Users\\Shalan\\Desktop\\TESTDOCS";
+
+		
+		
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				root = SelectRootDirtextField.getText();
 				System.out.println(SelectRootDirtextField.getText());
+
+				
+				//File rootFolder = new File(root);
+				try {
+					ReadingFiles.readfiles(root);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	tree = new JTree(JTreeOne.bundleDirectory(root));
+
+				tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				tree.setBounds(10, 117, 216, 268);
+				panel.add(tree);
 				
 				
 			}
@@ -118,8 +140,9 @@ public class KnowledgeManagerGUI extends JFrame {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				System.out.println("hello");
+				//System.out.println("hello!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			
+			
 			}
 		});
 		btnDelete.setBounds(344, 391, 89, 23);
@@ -129,16 +152,21 @@ public class KnowledgeManagerGUI extends JFrame {
 		btnSubmit_1.setBounds(10, 390, 89, 23);
 		panel.add(btnSubmit_1);
 		
-		/*JTree tree = new JTree();
-		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Root") {
-				{
-				}
-			}
-		));*/
-		tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		tree.setBounds(10, 117, 216, 268);
-		panel.add(tree);
+		
+		
+		
+		
+		
+		
+		
+    	
+		
+		
+		
+		
+		
+		
+		
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Search", null, panel_1, null);
@@ -153,17 +181,52 @@ public class KnowledgeManagerGUI extends JFrame {
 		panel_1.add(textField_2);
 		textField_2.setColumns(10);
 		
-		JButton btnSearcg = new JButton("Search");
-		btnSearcg.setBounds(192, 35, 89, 23);
-		panel_1.add(btnSearcg);
+		 final JTextArea textArea = new JTextArea();
+		textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		textArea.setBounds(10, 67, 449, 335);
+		panel_1.add(textArea);
+		
+	    
+		
+	    JScrollPane scroll = new JScrollPane();
+	    scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	          scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	         
+	          
+	         
+	  	    textArea.setVisible(true);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String tagName;
+				tagName = textField_2.getText();
+				System.out.println(tagName);
+				try {
+					ArrayList a = new ArrayList();
+					a = ReadingFiles.returnTagRearch(tagName);
+					//textArea.append(ReadingFiles.returnTagRearch(tagName));
+					for(int i = 0; i < a.size(); i++) {
+						
+						textArea.append((String) a.get(i));
+						System.out.println();
+					}
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnSearch.setBounds(192, 35, 89, 23);
+		panel_1.add(btnSearch);
 		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.setBounds(291, 35, 89, 23);
 		panel_1.add(btnRefresh);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 67, 271, 335);
-		panel_1.add(textArea);
+		
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("List", null, panel_2, null);

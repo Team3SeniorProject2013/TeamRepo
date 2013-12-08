@@ -15,7 +15,7 @@ public class JTreeOne {
 	static DefaultMutableTreeNode tempNode = rootNode;
 	static DefaultMutableTreeNode tempNode2 = tempNode;
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner input = new Scanner(System.in);
 
@@ -34,18 +34,15 @@ public class JTreeOne {
     	frame.pack();
     	frame.setVisible(true);
 
-	}*/
+	}
 	
 	public JTreeOne()
 	{
 	}
 	
-	public static JTree getJTreeDirectory(String str)
-	{
-		return new JTree(bundleDirectory(str));
-	}
 	
-	private static DefaultMutableTreeNode bundleDirectory(String sbr)
+	
+	public static DefaultMutableTreeNode bundleDirectory(String sbr)
 	{
 		File folder = new File(sbr); 
 	    File[] listOfFiles = folder.listFiles();
