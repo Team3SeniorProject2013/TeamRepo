@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class ReadingFiles 
 {
-         static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY"); 
+         static SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd"); 
          
          
          
@@ -129,15 +129,28 @@ public class ReadingFiles
               path = listOfFiles[i].getPath();
               fileSize = listOfFiles[i].length();
               DateModified = dateFormat.format(listOfFiles[i].lastModified());
-              
-              preparedStatement = connect
-                      .prepareStatement("insert into file (filename,directory,filesize,filetype,DateModified) values (?,?,?,?,?)"); 
+              //
+              //preparedStatement = connect
+               //       .prepareStatement("insert into file (filename,directory,filesize,filetype,DateModified) values (?,?,?,?,?)"); 
 
+              /*
+               INSERT INTO file
+              (filename,directory,filesize,filetype,DateModified)
+              SELECT 'advertising', 'javahii', 'advertising', 'advertising','advertising'
+              FROM dual
+              WHERE not exists (select * from file where directory = 'javahii');
+              */
+              
+              preparedStatement = 
+            		  connect.prepareStatement("insert into file (filename,directory,filesize,filetype,DateModified) SELECT ?,?,?,?,? FROM dual WHERE not exists (select * from file where directory = ?)"); 
+              
+              
               preparedStatement.setString(1, names);
               preparedStatement.setString(2, path);
               preparedStatement.setLong(3,fileSize);
               preparedStatement.setString(4,extension);
               preparedStatement.setString(5,DateModified);
+              preparedStatement.setString(6, path);
               preparedStatement.executeUpdate();
               
              

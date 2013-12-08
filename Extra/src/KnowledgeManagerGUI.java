@@ -173,21 +173,24 @@ public class KnowledgeManagerGUI extends JFrame {
                 textField_2.setBounds(10, 36, 178, 20);
                 panel_1.add(textField_2);
                 textField_2.setColumns(10);
+                 
+                 JScrollPane scrollPane = new JScrollPane();
+                 scrollPane.setBounds(10, 67, 449, 335);
+                 panel_1.add(scrollPane);
                 
                  final JTextArea textArea = new JTextArea();
+                 scrollPane.setViewportView(textArea);
                 textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-                textArea.setBounds(10, 67, 449, 335);
-                panel_1.add(textArea);
+                
+                 
+                
+                     textArea.setVisible(true);
                 
             
                 
             JScrollPane scroll = new JScrollPane();
             scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
                   scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-                 
-                  
-                 
-                      textArea.setVisible(true);
                 
                 JButton btnSearch = new JButton("Search");
                 btnSearch.addActionListener(new ActionListener() {
@@ -199,11 +202,13 @@ public class KnowledgeManagerGUI extends JFrame {
                                 try {
                                         ArrayList a = new ArrayList();
                                         a = ReadingFiles.returnTagRearch(tagName);
+                                       // System.out.println(a.size());
                                         //textArea.append(ReadingFiles.returnTagRearch(tagName));
+
                                         for(int i = 0; i < a.size(); i++) {
-                                                
                                                 textArea.append((String) a.get(i));
-                                                System.out.println();
+                                                textArea.append("    ");
+                                                
                                         }
                                         
                                 } catch (Exception e) {
