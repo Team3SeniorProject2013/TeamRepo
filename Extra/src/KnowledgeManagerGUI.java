@@ -81,6 +81,12 @@ public class KnowledgeManagerGUI extends JFrame {
 		//String root;// = "C:\\Users\\Shalan\\Desktop\\TESTDOCS";
 
 		
+		tree = new JTree();
+
+		tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		tree.setBounds(10, 117, 216, 268);
+		panel.add(tree);
+		
 		
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -95,11 +101,11 @@ public class KnowledgeManagerGUI extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    	tree = new JTree(JTreeOne.bundleDirectory(root));
+		    	//tree = new JTree(JTreeOne.bundleDirectory(root));
 
-				tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-				tree.setBounds(10, 117, 216, 268);
-				panel.add(tree);
+				//tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+				//tree.setBounds(10, 117, 216, 268);
+				//panel.add(tree);
 				
 				
 			}

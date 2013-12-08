@@ -34,7 +34,22 @@ public class ReadingFiles
 	 
     public static void main(String[] args) throws Exception 
     {
-    	
+    	dbConnection();
+    	String selectSQL = "select FileName, Directory, FileSize, DateModified from file";
+        preparedStatement = connect.prepareStatement(selectSQL);
+        //preparedStatement.setString(1, TagName);
+        
+        resultSet = preparedStatement.executeQuery();
+        ArrayList arrayList = new ArrayList();
+        
+        while(resultSet.next()) {
+        	System.out.println(resultSet.getString("filename"));
+        	System.out.println(resultSet.getString("Directory"));
+        	System.out.println(resultSet.getString("FileSize"));
+        	System.out.println(resultSet.getString("DateModified"));
+
+            
+        }
       
         
     }
