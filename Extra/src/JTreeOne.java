@@ -5,7 +5,7 @@ import javax.swing.tree.*;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 
-
+//changes
 public class JTreeOne {
 
 	static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY");
@@ -15,20 +15,14 @@ public class JTreeOne {
 	static DefaultMutableTreeNode tempNode = rootNode;
 	static DefaultMutableTreeNode tempNode2 = tempNode;
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner input = new Scanner(System.in);
 
 
     	System.out.println("Please enter root path:");
     	String root = input.nextLine();
-       /**
-	    *	Example valid root path inputs:
-	    *	1. C:\Users\Quang\Documents\Dropbox\9) Fall 2013\Software Engineering Project\testFiles
-	    *   2. C:\Users\Quang\Google Drive\Data Alliance Test Files\TESTDOCS\-- Bri Library --
-       **/
 
-    	//String root = "C:\\Users\\Quang\\Documents\\Dropbox\\9) Fall 2013\\Software Engineering Project\\testFiles";
     	File rootFolder = new File(root);
 
     	tree = new JTree(bundleDirectory(root));
@@ -40,6 +34,15 @@ public class JTreeOne {
     	frame.pack();
     	frame.setVisible(true);
 
+	}*/
+	
+	public JTreeOne()
+	{
+	}
+	
+	public static JTree getJTreeDirectory(String str)
+	{
+		return new JTree(bundleDirectory(str));
 	}
 	
 	private static DefaultMutableTreeNode bundleDirectory(String sbr)
