@@ -31,34 +31,12 @@ public class ReadingFiles
          private static PreparedStatement preparedStatement = null;
          private static ResultSet resultSet = null;  
          
-         
-    public static void main(String[] args) throws Exception 
-    {
-            dbConnection();
-            String selectSQL = "select FileName, Directory, FileSize, DateModified from file";
-        preparedStatement = connect.prepareStatement(selectSQL);
-        //preparedStatement.setString(1, TagName);
-        
-        resultSet = preparedStatement.executeQuery();
-        ArrayList arrayList = new ArrayList();
-        
-        while(resultSet.next()) {
-                System.out.println(resultSet.getString("filename"));
-                System.out.println(resultSet.getString("Directory"));
-                System.out.println(resultSet.getString("FileSize"));
-                System.out.println(resultSet.getString("DateModified"));
-
-            
-        }
-      
-        
-    }
     
     public static void dbConnection() throws Exception{
             Class.forName("com.mysql.jdbc.Driver");
         connect = DriverManager
-            .getConnection("jdbc:mysql://localhost/research knowledge manager?"
-                + "user=root&password=");
+            .getConnection("jdbc:mysql://localhost/research_knowledge_manager?"
+                + "user=root&password=root");
         
             
     }
