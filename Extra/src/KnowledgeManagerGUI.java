@@ -55,6 +55,7 @@ public class KnowledgeManagerGUI extends JFrame {
          */
         @SuppressWarnings("serial")
         public KnowledgeManagerGUI() {
+        	
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 setBounds(100, 100, 500, 500);
                 contentPane = new JPanel();
@@ -64,6 +65,10 @@ public class KnowledgeManagerGUI extends JFrame {
                 
                 JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
                 contentPane.add(tabbedPane, BorderLayout.CENTER);
+                
+                /********************************************************************************
+                 * TAGS TAB
+                 ********************************************************************************/
                 
                 final JPanel panel = new JPanel();
                 
@@ -79,10 +84,10 @@ public class KnowledgeManagerGUI extends JFrame {
                 JButton btnBrowse = new JButton("Ok");
                 
                 root = "";
-                //String root = "C:\\Users\\Jun\\Desktop\\Root\\TESTDOCS";
                 
-                btnBrowse.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent arg0) {
+                btnBrowse.addActionListener(new ActionListener() 
+                {
+                        public void actionPerformed(ActionEvent e) {
                                 String roots;  
                                 roots = SelectRootDirtextField.getText();
                                 System.out.println(SelectRootDirtextField.getText());
@@ -94,7 +99,6 @@ public class KnowledgeManagerGUI extends JFrame {
                                         
                                         if(!root.equals(""))
                                         {
-                                        	
                                         	JScrollPane scrollPane = new JScrollPane();
                                             scrollPane.setBounds(10, 117, 216, 268);
                                             panel.add(scrollPane);
@@ -104,9 +108,9 @@ public class KnowledgeManagerGUI extends JFrame {
                                         	tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
                                         }
  
-                                } catch (Exception e) {
+                                } catch (Exception ex) {
                                         // TODO Auto-generated catch block
-                                        e.printStackTrace();
+                                        ex.printStackTrace();
                                 }
                         }
                         
@@ -160,7 +164,12 @@ public class KnowledgeManagerGUI extends JFrame {
                 JButton btnSubmit_1 = new JButton("Submit");
                 btnSubmit_1.setBounds(10, 390, 89, 23);
                 panel.add(btnSubmit_1);                
-
+                
+                
+                /********************************************************************************
+                 * SEARCH TAB
+                 ********************************************************************************/
+                
                 JPanel panel_1 = new JPanel();
                 tabbedPane.addTab("Search", null, panel_1, null);
                 panel_1.setLayout(null);
@@ -212,6 +221,8 @@ public class KnowledgeManagerGUI extends JFrame {
                                 }
                         }
                 });
+                
+                
                 btnSearch.setBounds(192, 35, 89, 23);
                 panel_1.add(btnSearch);
                 
@@ -220,6 +231,9 @@ public class KnowledgeManagerGUI extends JFrame {
                 panel_1.add(btnRefresh);
                 
                 
+                /********************************************************************************
+                 * LIST TAB
+                 ********************************************************************************/
                 
                 JPanel panel_2 = new JPanel();
                 tabbedPane.addTab("List", null, panel_2, null);
@@ -240,6 +254,7 @@ public class KnowledgeManagerGUI extends JFrame {
                                 return values[index];
                         }
                 });
+                
                 list_2.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
                 list_2.setBounds(386, 25, 73, 350);
                 panel_2.add(list_2);
@@ -256,11 +271,22 @@ public class KnowledgeManagerGUI extends JFrame {
                 lblList.setBounds(10, 11, 46, 14);
                 panel_2.add(lblList);
                 
+                
+                /********************************************************************************
+                 * RECENT TAB
+                 ********************************************************************************/
+                
                 JPanel panel_3 = new JPanel();
                 tabbedPane.addTab("Recent", null, panel_3, null);
                 panel_3.setLayout(null);
                 
                 JButton btnSubmit_3 = new JButton("Submit");
+                
+                btnSubmit_3.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                	}
+                });
+                
                 btnSubmit_3.setBounds(10, 390, 89, 23);
                 panel_3.add(btnSubmit_3);
                 
@@ -273,6 +299,9 @@ public class KnowledgeManagerGUI extends JFrame {
                 lblRecentSearch.setBounds(10, 11, 119, 14);
                 panel_3.add(lblRecentSearch);
                 
+                /********************************************************************************
+                 * BOOKMARK TAB
+                 ********************************************************************************/
                 JPanel panel_4 = new JPanel();
                 tabbedPane.addTab("Bookmark", null, panel_4, null);
                 panel_4.setLayout(null);
@@ -287,14 +316,49 @@ public class KnowledgeManagerGUI extends JFrame {
                 panel_4.add(list_1);
                 
                 JButton btnSubmit = new JButton("Submit");
+                
+                /*
+                 * btnBrowse.addActionListener(new ActionListener() 
+                {
+                        public void actionPerformed(ActionEvent e) {
+                                String roots;  
+                                roots = SelectRootDirtextField.getText();
+                                System.out.println(SelectRootDirtextField.getText());                   
+                                try {
+                                        ReadingFiles.readfiles(roots);                                    
+                                        root = SelectRootDirtextField.getText();
+                                } catch (Exception ex) {
+                                        // TODO Auto-generated catch block
+                                        ex.printStackTrace();
+                                }
+                        }       
+                });
+                 */
+                btnSubmit.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                		
+                	}
+                });
+                
                 btnSubmit.setBounds(220, 39, 89, 23);
                 panel_4.add(btnSubmit);
                 
                 JButton btnAdd = new JButton("Add");
+                
+                btnAdd.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                	}
+                });
+                
                 btnAdd.setBounds(220, 73, 89, 23);
                 panel_4.add(btnAdd);
                 
                 JButton btnDelete_1 = new JButton("Delete");
+                
+                btnDelete_1.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                	}
+                });
                 btnDelete_1.setBounds(220, 107, 89, 23);
                 panel_4.add(btnDelete_1);
         }
