@@ -35,8 +35,8 @@ public class ReadingFiles
     public static void dbConnection() throws Exception{
             Class.forName("com.mysql.jdbc.Driver");
         connect = DriverManager
-            .getConnection("jdbc:mysql://localhost/research_knowledge_manager?"
-                + "user=root&password=root");
+            .getConnection("jdbc:mysql://localhost/research knowledge manager?"
+                + "user=root&password=");
         
             
     }
