@@ -78,10 +78,10 @@ public class KnowledgeManagerGUI extends JFrame {
 		SelectRootDirtextField.setColumns(10);
 		
 		JButton btnBrowse = new JButton("Ok");
-		//String root;// = "C:\\Users\\Shalan\\Desktop\\TESTDOCS";
+		String root = "C:\\Users\\Shalan\\Desktop\\TESTDOCS";
 
 		
-		tree = new JTree();
+		tree = new JTree(JTreeOne.bundleDirectory(root));
 
 		tree.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		tree.setBounds(10, 117, 216, 268);
@@ -90,13 +90,14 @@ public class KnowledgeManagerGUI extends JFrame {
 		
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				root = SelectRootDirtextField.getText();
+				String roots;  
+				roots = SelectRootDirtextField.getText();
 				System.out.println(SelectRootDirtextField.getText());
 
 				
 				//File rootFolder = new File(root);
 				try {
-					ReadingFiles.readfiles(root);
+					ReadingFiles.readfiles(roots);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -158,22 +159,7 @@ public class KnowledgeManagerGUI extends JFrame {
 		btnSubmit_1.setBounds(10, 390, 89, 23);
 		panel.add(btnSubmit_1);
 		
-		
-		
-		
-		
-		
-		
-		
-    	
-		
-		
-		
-		
-		
-		
-		
-		
+
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Search", null, panel_1, null);
 		panel_1.setLayout(null);
