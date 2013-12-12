@@ -9,9 +9,9 @@ import java.util.Date;
 public class jdbcTest {
 	
 	  public static void main(String[] args) throws Exception {
-		  jdbcTest dao = new jdbcTest();
-		    dao.readDataBase();
-		    }
+		  //jdbcTest dao = new jdbcTest();
+		    //dao.readDataBase();
+	  }
 	
   private Connection connect = null;
   private Statement statement = null;

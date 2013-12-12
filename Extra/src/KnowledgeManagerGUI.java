@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import java.awt.Label;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -29,8 +30,11 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.JScrollBar;
 import java.awt.Panel;
+import java.awt.Checkbox;
+import java.awt.Component;
 
 //changes
 public class KnowledgeManagerGUI extends JFrame {
@@ -39,8 +43,12 @@ public class KnowledgeManagerGUI extends JFrame {
         private JTextField SelectRootDirtextField;
         private JTextField AddTagstextField_1;
         private JTextField textField_2;
+        private  Checkbox update_checkbox;
         String root;
-        JTree tree;
+        static JTree tree;
+        private static String roots;
+        JList list;
+        DefaultListModel listModel;
         /**
          * Launch the application.
          */
@@ -54,6 +62,10 @@ public class KnowledgeManagerGUI extends JFrame {
          * Create the frame.
          */
         @SuppressWarnings("serial")
+        
+        
+
+        
         public KnowledgeManagerGUI() {
         	
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +89,7 @@ public class KnowledgeManagerGUI extends JFrame {
                 panel.setLayout(null);
                 
                 SelectRootDirtextField = new JTextField();
-                SelectRootDirtextField.setBounds(10, 43, 335, 20);
+                SelectRootDirtextField.setBounds(10, 35, 335, 20);
                 panel.add(SelectRootDirtextField);
                 SelectRootDirtextField.setColumns(10);
                 
@@ -88,14 +100,15 @@ public class KnowledgeManagerGUI extends JFrame {
                 btnBrowse.addActionListener(new ActionListener() 
                 {
                         public void actionPerformed(ActionEvent e) {
-                                String roots;  
+                                  
                                 roots = SelectRootDirtextField.getText();
                                 System.out.println(SelectRootDirtextField.getText());
                       
                                 try {
-                                        ReadingFiles.readfiles(roots);
-                                        
-                                        root = SelectRootDirtextField.getText();
+                                        if (update_checkbox.getState() == true) {
+											ReadingFiles.readfiles(roots);
+										}
+										root = SelectRootDirtextField.getText();
                                         
                                         if(!root.equals(""))
                                         {
@@ -116,12 +129,14 @@ public class KnowledgeManagerGUI extends JFrame {
                         
                         
                 });
-
-                btnBrowse.setBounds(344, 42, 89, 23);
+                
+                
+                
+                btnBrowse.setBounds(344, 34, 89, 23);
                 panel.add(btnBrowse);
                 
                 JLabel lblNewLabel = new JLabel("Select root directory");
-                lblNewLabel.setBounds(10, 27, 165, 14);
+                lblNewLabel.setBounds(10, 10, 165, 14);
                 panel.add(lblNewLabel);
                 
                 JLabel lblAssociatedTags = new JLabel("Associated Tags");
@@ -137,14 +152,26 @@ public class KnowledgeManagerGUI extends JFrame {
                 panel.add(AddTagstextField_1);
                 AddTagstextField_1.setColumns(10);
                 
+                list = new JList();
+        		listModel = new DefaultListModel();
+        		list.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+                list.setBounds(233, 117, 226, 268);
+                panel.add(list);
+        		 listModel.addElement("item 1");
+
+        		 
                 JButton btnNewButton = new JButton("Add tag");
+                btnNewButton.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent arg0) {
+                		listModel.addElement("new item");
+                	}
+                });
                 btnNewButton.setBounds(370, 91, 89, 23);
                 panel.add(btnNewButton);
                 
-                JList list = new JList();
-                list.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-                list.setBounds(233, 117, 226, 268);
-                panel.add(list);
+                
+
+                
                 
                 JButton btnNewButton_1 = new JButton("Edit");
                 btnNewButton_1.setBounds(233, 391, 89, 23);
@@ -162,8 +189,50 @@ public class KnowledgeManagerGUI extends JFrame {
                 panel.add(btnDelete);
                 
                 JButton btnSubmit_1 = new JButton("Submit");
+                btnSubmit_1.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent arg0) {
+                        
+                		
+                		String filename = null;
+                		String parentName = null;
+                		TreePath treepath = tree.getSelectionPath();
+                		
+                		Object[] c = treepath.getPath();
+                		
+                		filename = c[c.length-1].toString();
+                		parentName = c[c.length-2].toString();
+                		ArrayList tagNames = new ArrayList();
+                		try {
+							tagNames = ReadingFiles.getTagsfromDB(filename,parentName);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                		
+                		System.out.println(tagNames);
+                		//StringBuilder stringBuilder = new StringBuilder();
+                		
+                		/*String b = "\"";
+                		for(int i =0; i < c.length; i++) {
+                		
+                			stringBuilder.append(c[i]);
+                			
+                			if (i < c.length-1) {
+                				stringBuilder.append("\\");
+                			}
+                		}
+                		//System.out.println(stringBuilder);
+                		*/
+                		
+                		
+                	}
+                });
                 btnSubmit_1.setBounds(10, 390, 89, 23);
                 panel.add(btnSubmit_1);                
+                
+                update_checkbox = new Checkbox("Update Database");
+                update_checkbox.setBounds(344, 10, 115, 22);
+                panel.add(update_checkbox);
                 
                 
                 /********************************************************************************
@@ -174,12 +243,12 @@ public class KnowledgeManagerGUI extends JFrame {
                 tabbedPane.addTab("Search", null, panel_1, null);
                 panel_1.setLayout(null);
                 
-                JLabel lblSearchResult = new JLabel("Search Result");
+                JLabel lblSearchResult = new JLabel("Search using Tag");
                 lblSearchResult.setBounds(10, 11, 101, 14);
                 panel_1.add(lblSearchResult);
                 
                 textField_2 = new JTextField();
-                textField_2.setBounds(10, 36, 178, 20);
+                textField_2.setBounds(10, 24, 178, 20);
                 panel_1.add(textField_2);
                 textField_2.setColumns(10);
                  
@@ -189,7 +258,6 @@ public class KnowledgeManagerGUI extends JFrame {
                 
                  final JTextArea textArea = new JTextArea();
                  scrollPane.setViewportView(textArea);
-                textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
                 
                  
                 
@@ -202,9 +270,10 @@ public class KnowledgeManagerGUI extends JFrame {
                   scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                 
                 JButton btnSearch = new JButton("Search");
+                btnSearch.setBounds(188, 23, 89, 23);
                 btnSearch.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                                
+                                textArea.setText("");
                                 String tagName;
                                 tagName = textField_2.getText();
                                 System.out.println(tagName);
@@ -218,6 +287,11 @@ public class KnowledgeManagerGUI extends JFrame {
                                                 textArea.append((String) a.get(i));
                                                 textArea.append("    ");
                                                 
+                                                if ((i+1) % 4 == 0) {
+                                                	textArea.append("\n");
+                                                System.out.println((i+1) % 4);}
+                                                
+                                                
                                         }
                                         
                                 } catch (Exception e) {
@@ -226,14 +300,11 @@ public class KnowledgeManagerGUI extends JFrame {
                                 }
                         }
                 });
-                
-                
-                btnSearch.setBounds(192, 35, 89, 23);
                 panel_1.add(btnSearch);
                 
-                JButton btnRefresh = new JButton("Refresh");
-                btnRefresh.setBounds(291, 35, 89, 23);
-                panel_1.add(btnRefresh);
+                JLabel lblFileNameDirectory = new JLabel("File Name, Directory, File Size(Kb), Last Date Modifited");
+                lblFileNameDirectory.setBounds(10, 53, 381, 14);
+                panel_1.add(lblFileNameDirectory);
                 
                 
                 /********************************************************************************
@@ -366,5 +437,9 @@ public class KnowledgeManagerGUI extends JFrame {
                 });
                 btnDelete_1.setBounds(220, 107, 89, 23);
                 panel_4.add(btnDelete_1);
+        }
+
+        public static String getRoots() {
+        	return roots;
         }
 }

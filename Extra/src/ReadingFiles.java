@@ -176,4 +176,32 @@ public class ReadingFiles
             return arrayList;
             
     }    
+
+    
+    public static ArrayList getTagsfromDB(String fileName, String parentName) throws Exception {
+        
+        dbConnection();
+    
+		    String selectSQL = "select tag from file, tag where directory like '%" + fileName + "%'  and directory like '%" + parentName + "%' and file.FileIndex = tag.FileId;";
+		    
+		    preparedStatement = connect.prepareStatement(selectSQL);
+		    //preparedStatement.setString(1, fileName);
+		    //preparedStatement.setString(2, parentName);
+		    
+		    //System.out.println(preparedStatement);
+		    
+		    resultSet = preparedStatement.executeQuery();
+		    ArrayList arrayList = new ArrayList();
+		    
+		    while(resultSet.next()) {
+		            arrayList.add(resultSet.getString("tag"));
+		
+		    }
+		        
+		        return arrayList;
+		        
+		}    
+
+
+
 }
