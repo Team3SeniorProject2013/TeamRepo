@@ -31,7 +31,11 @@ public class ReadingFiles
          private static PreparedStatement preparedStatement = null;
          private static ResultSet resultSet = null;  
          
-    
+   	public static void main(String[] args) throws Exception {
+		  //jdbcTest dao = new jdbcTest();
+		    //dao.readDataBase();
+		  addTagstoDB("John","filelist.xml", "Email - re AIMIA_files");
+	  }
     public static void dbConnection() throws Exception{
             Class.forName("com.mysql.jdbc.Driver");
         connect = DriverManager
@@ -41,6 +45,13 @@ public class ReadingFiles
             
     }
     
+    public static void dbClose() throws Exception{
+    	connect.close();
+    }
+    
+    	//ArrayList a = new ArrayList();
+    	//a = getAllTag();
+    	//System.out.println(a);
     
     
     public static void readfiles(String root) throws Exception{
@@ -68,7 +79,7 @@ public class ReadingFiles
     
     }
     
-    public static void searchFile (String root) throws SQLException // input path and displays file names
+    public static void searchFile (String root) throws Exception // input path and displays file names
     {
           File folder = new File(root); //creates new root file
       File[] listOfFiles = folder.listFiles();
@@ -141,21 +152,16 @@ public class ReadingFiles
               searchFile (root + "\\"+subRoot); //if it is a directory, recursively search sub directory
               
           }
+		    
+
       }
-          
+      dbClose();
     }        
 
     
     public static ArrayList returnTagRearch(String TagName) throws Exception {
             
-            dbConnection();
-
-        //select FileName, Directory, FileSize, DateModified from file, tag where tag.FileID = file.FileIndex and tag = 'chicken'
-/*
-        resultSet = statement.executeQuery("select FileName, Directory, FileSize, DateModified from file, tag where tag.FileID = file.FileIndex and tag = ?");
-        preparedStatement.setString(1,TagName);
-        preparedStatement.executeQuery();
-*/
+        dbConnection();
         
         String selectSQL = "select FileName, Directory, FileSize, DateModified from file, tag where tag.FileID = file.FileIndex and tag = ?";
         preparedStatement = connect.prepareStatement(selectSQL);
@@ -172,7 +178,7 @@ public class ReadingFiles
 
             
         }
-            
+	    dbClose();
             return arrayList;
             
     }    
@@ -183,12 +189,10 @@ public class ReadingFiles
         dbConnection();
     
 		    String selectSQL = "select tag from file, tag where directory like '%" + fileName + "%'  and directory like '%" + parentName + "%' and file.FileIndex = tag.FileId;";
-		    
+    		//String insertSQL = "insert into tag(tag) value (?) from file, tag where tag.fileid = file.fileindex and file.directory like '%" + tagName + "%' and file.directory like '%" + parentName + "%' " + fileName;
+
 		    preparedStatement = connect.prepareStatement(selectSQL);
-		    //preparedStatement.setString(1, fileName);
-		    //preparedStatement.setString(2, parentName);
-		    
-		    //System.out.println(preparedStatement);
+		   
 		    
 		    resultSet = preparedStatement.executeQuery();
 		    ArrayList arrayList = new ArrayList();
@@ -197,11 +201,52 @@ public class ReadingFiles
 		            arrayList.add(resultSet.getString("tag"));
 		
 		    }
-		        
+		    dbClose(); 
 		        return arrayList;
 		        
 		}    
 
+    	public static ArrayList getAllTag() throws Exception {
+    		
+    		dbConnection();
+		    String selectSQL = "select tag from tag;";
+		    preparedStatement = connect.prepareStatement(selectSQL);
 
+		    resultSet = preparedStatement.executeQuery();
+		    ArrayList arrayList = new ArrayList();
+		    
+		    while(resultSet.next()) {
+		            arrayList.add(resultSet.getString("tag"));
+		
+		    }
+		    dbClose();
+		    return arrayList;
+		        
+		}    
+    	
+    	public static void addTagstoDB(String tagName, String parentName, String fileName) throws Exception {
+    		
+    		dbConnection();
+    		String index = "-1";
+            String selectSQL = "select FileIndex from file where file.directory like '%" + parentName +"%' and file.directory like '%" + fileName+"%'";
+    		preparedStatement = connect.prepareStatement(selectSQL);
+    		resultSet = preparedStatement.executeQuery();
+		    
+		    while(resultSet.next()) {
+		            index = resultSet.getString("FileIndex");
+		    }
+		    
+		    System.out.println(index);
+    		String insertSQL = "insert into tag (FileID, Tag) values (?,?)";
+    		preparedStatement = connect.prepareStatement(insertSQL);
+    		preparedStatement.setString(1,index);
+    		preparedStatement.setString(2, tagName);
+    		preparedStatement.executeUpdate();
+		    
+    		dbClose();	    	            
+    	}
+    		
+    	
+    	
 
 }

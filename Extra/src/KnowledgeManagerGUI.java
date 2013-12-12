@@ -47,7 +47,7 @@ public class KnowledgeManagerGUI extends JFrame {
         String root;
         static JTree tree;
         private static String roots;
-        JList list;
+        JList taglist;
         DefaultListModel listModel;
         /**
          * Launch the application.
@@ -151,27 +151,45 @@ public class KnowledgeManagerGUI extends JFrame {
                 AddTagstextField_1.setBounds(236, 92, 134, 20);
                 panel.add(AddTagstextField_1);
                 AddTagstextField_1.setColumns(10);
-                
-                list = new JList();
         		listModel = new DefaultListModel();
-        		list.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-                list.setBounds(233, 117, 226, 268);
-                panel.add(list);
+        		
+        		final JScrollPane tagScrollPane = new JScrollPane();
+        		tagScrollPane.setBounds(233, 117, 226, 268);
+        		panel.add(tagScrollPane);
+        		
+        		taglist = new JList();
+        		tagScrollPane.setViewportView(taglist);
+        		taglist.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         		 listModel.addElement("item 1");
 
         		 
                 JButton btnNewButton = new JButton("Add tag");
                 btnNewButton.addActionListener(new ActionListener() {
                 	public void actionPerformed(ActionEvent arg0) {
-                		listModel.addElement("new item");
+                		
+                		String fileName = null;
+                		String parentName = null;
+                		String tagName = null;
+                		TreePath treepath = tree.getSelectionPath();
+                		
+                		Object[] c = treepath.getPath();
+                		
+                		fileName = c[c.length-1].toString();
+                		parentName = c[c.length-2].toString();
+                		tagName = AddTagstextField_1.getText();
+                		
+                		try{
+                			ReadingFiles.addTagstoDB(tagName, parentName, fileName);
+                		}
+                		catch(Exception e)
+                		{
+                			System.out.println(e);
+                		}
+                			
                 	}
                 });
                 btnNewButton.setBounds(370, 91, 89, 23);
-                panel.add(btnNewButton);
-                
-                
-
-                
+                panel.add(btnNewButton);    
                 
                 JButton btnNewButton_1 = new JButton("Edit");
                 btnNewButton_1.setBounds(233, 391, 89, 23);
@@ -192,39 +210,9 @@ public class KnowledgeManagerGUI extends JFrame {
                 btnSubmit_1.addActionListener(new ActionListener() {
                 	public void actionPerformed(ActionEvent arg0) {
                         
-                		
-                		String filename = null;
-                		String parentName = null;
-                		TreePath treepath = tree.getSelectionPath();
-                		
-                		Object[] c = treepath.getPath();
-                		
-                		filename = c[c.length-1].toString();
-                		parentName = c[c.length-2].toString();
-                		ArrayList tagNames = new ArrayList();
-                		try {
-							tagNames = ReadingFiles.getTagsfromDB(filename,parentName);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-                		
-                		System.out.println(tagNames);
-                		//StringBuilder stringBuilder = new StringBuilder();
-                		
-                		/*String b = "\"";
-                		for(int i =0; i < c.length; i++) {
-                		
-                			stringBuilder.append(c[i]);
+                		taglist = new JList(returnTags().toArray());
+                		tagScrollPane.setViewportView(taglist);
                 			
-                			if (i < c.length-1) {
-                				stringBuilder.append("\\");
-                			}
-                		}
-                		//System.out.println(stringBuilder);
-                		*/
-                		
-                		
                 	}
                 });
                 btnSubmit_1.setBounds(10, 390, 89, 23);
@@ -441,5 +429,27 @@ public class KnowledgeManagerGUI extends JFrame {
 
         public static String getRoots() {
         	return roots;
+        }
+        
+        public static ArrayList returnTags() {
+        	
+        	String filename = null;
+    		String parentName = null;
+    		TreePath treepath = tree.getSelectionPath();
+    		
+    		Object[] c = treepath.getPath();
+    		
+    		filename = c[c.length-1].toString();
+    		parentName = c[c.length-2].toString();
+    		
+    		ArrayList tagNames = new ArrayList();
+    		try {
+				tagNames = ReadingFiles.getTagsfromDB(filename,parentName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    		return tagNames;
         }
 }

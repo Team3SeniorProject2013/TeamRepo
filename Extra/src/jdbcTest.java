@@ -11,6 +11,7 @@ public class jdbcTest {
 	  public static void main(String[] args) throws Exception {
 		  //jdbcTest dao = new jdbcTest();
 		    //dao.readDataBase();
+		  System.out.println(ReadingFiles.getAllTag());
 	  }
 	
   private Connection connect = null;
