@@ -67,6 +67,7 @@ public class KnowledgeManagerGUI extends JFrame {
 
         
         public KnowledgeManagerGUI() {
+        	setTitle("Knowledge Research Manager");
         	
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 setBounds(100, 100, 500, 500);
@@ -267,7 +268,7 @@ public class KnowledgeManagerGUI extends JFrame {
                                 System.out.println(tagName);
                                 try {
                                         ArrayList a = new ArrayList();
-                                        a = ReadingFiles.returnTagRearch(tagName);
+                                        a = ReadingFiles.returnTagSearch(tagName);
                                        // System.out.println(a.size());
                                         //textArea.append(ReadingFiles.returnTagRearch(tagName));
 

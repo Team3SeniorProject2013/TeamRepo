@@ -155,11 +155,11 @@ public class ReadingFiles
 		    
 
       }
-      dbClose();
+      //dbClose();
     }        
 
     
-    public static ArrayList returnTagRearch(String TagName) throws Exception {
+    public static ArrayList returnTagSearch(String TagName) throws Exception {
             
         dbConnection();
         
@@ -189,7 +189,6 @@ public class ReadingFiles
         dbConnection();
     
 		    String selectSQL = "select tag from file, tag where directory like '%" + fileName + "%'  and directory like '%" + parentName + "%' and file.FileIndex = tag.FileId;";
-    		//String insertSQL = "insert into tag(tag) value (?) from file, tag where tag.fileid = file.fileindex and file.directory like '%" + tagName + "%' and file.directory like '%" + parentName + "%' " + fileName;
 
 		    preparedStatement = connect.prepareStatement(selectSQL);
 		   
