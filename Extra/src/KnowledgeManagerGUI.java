@@ -208,6 +208,8 @@ public class KnowledgeManagerGUI extends JFrame {
 
 
 				}
+				taglist = new JList(returnTags().toArray());
+				tagScrollPane.setViewportView(taglist);
 
 
 			}
@@ -235,7 +237,8 @@ public class KnowledgeManagerGUI extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				taglist = new JList(returnTags().toArray());
+				tagScrollPane.setViewportView(taglist);
 
 
 			}
