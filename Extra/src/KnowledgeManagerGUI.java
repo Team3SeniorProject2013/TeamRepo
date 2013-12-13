@@ -53,6 +53,8 @@ public class KnowledgeManagerGUI extends JFrame {
 	DefaultListModel listModel;
 	JList list;
 	JScrollPane scrollPane_1;
+	JList list_2;
+	JScrollPane scrollPane_2;
 	/**
 	 * Launch the application.
 	 */
@@ -283,17 +285,6 @@ public class KnowledgeManagerGUI extends JFrame {
 		panel_1.add(textField_2);
 		textField_2.setColumns(10);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 67, 449, 335);
-		panel_1.add(scrollPane);
-
-		final JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-
-
-
-		textArea.setVisible(true);
-
 
 
 		JScrollPane scroll = new JScrollPane();
@@ -304,16 +295,32 @@ public class KnowledgeManagerGUI extends JFrame {
 		btnSearch.setBounds(188, 23, 89, 23);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				textArea.setText("");
+				//textArea.setText("");
 				String tagName;
 				tagName = textField_2.getText();
 				//System.out.println(tagName);
 				try {
 					ArrayList a = new ArrayList();
 					a = ReadingFiles.returnTagSearch(tagName);
+					ArrayList abc = new ArrayList();
+					
+					for(int ab = 0; ab < a.size(); ab++) {
+						//abc.add(a.get(ab));
+						StringBuilder build = new StringBuilder();
+						build.append(a.get(ab));
+						ab++;
+						build.append(" ");
+						build.append(a.get(ab));
+						ab++;
+						//build.append(a.get(ab));
+						ab++;
+						//build.append(a.get(ab));
+						
+						abc.add(build);
+					}
 					// System.out.println(a.size());
 					//textArea.append(ReadingFiles.returnTagRearch(tagName));
-
+					/*
 					for(int i = 0; i < a.size(); i++) {
 						textArea.append((String) a.get(i));
 						textArea.append("    ");
@@ -321,11 +328,14 @@ public class KnowledgeManagerGUI extends JFrame {
 						if ((i+1) % 4 == 0) {
 							textArea.append("\n");
 							System.out.println((i+1) % 4);}
-
-
+						*/
+					
+					list_2 = new JList(abc.toArray());
+					//tagScrollPane.setViewportView(taglist);
+					scrollPane_2.setViewportView(list_2);
 					}
 
-				} catch (Exception e) {
+				 catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -333,14 +343,16 @@ public class KnowledgeManagerGUI extends JFrame {
 		});
 		panel_1.add(btnSearch);
 
-		JLabel lblFileNameDirectory = new JLabel("File Name, Directory, File Size(Kb), Last Date Modifited");
+		JLabel lblFileNameDirectory = new JLabel("File Name, File Directory Location");
 		lblFileNameDirectory.setBounds(10, 53, 381, 14);
 		panel_1.add(lblFileNameDirectory);
-
-
-		/********************************************************************************
-		 * LIST TAB
-		 ********************************************************************************/
+				
+				scrollPane_2 = new JScrollPane();
+				scrollPane_2.setBounds(10, 78, 449, 335);
+				panel_1.add(scrollPane_2);
+				
+				list_2 = new JList();
+				scrollPane_2.setViewportView(list_2);
 
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("List", null, panel_2, null);
