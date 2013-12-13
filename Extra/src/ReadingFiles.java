@@ -34,7 +34,10 @@ public class ReadingFiles
    	public static void main(String[] args) throws Exception {
 		  //jdbcTest dao = new jdbcTest();
 		    //dao.readDataBase();
-		  addTagstoDB("John","filelist.xml", "Email - re AIMIA_files");
+		  //addTagstoDB("John","filelist.xml", "Email - re AIMIA_files");
+   		//ArrayList a = new ArrayList();
+   		//a = getEntireTagList();
+   		//System.out.println(a);
 	  }
     public static void dbConnection() throws Exception{
             Class.forName("com.mysql.jdbc.Driver");
@@ -223,6 +226,23 @@ public class ReadingFiles
 		        
 		}    
     	
+    	public static ArrayList getEntireTagList() throws Exception {
+    		
+    		dbConnection();
+		    String selectSQL = "select tag from tag;";
+		    
+		    resultSet = preparedStatement.executeQuery();
+		    ArrayList arrayList = new ArrayList();
+		    
+		    while(resultSet.next()) {
+		            arrayList.add(resultSet.getString("tag"));
+		
+		    }
+		    dbClose();
+		    return arrayList;
+		        
+		}  
+    	
     	public static void addTagstoDB(String tagName, String parentName, String fileName) throws Exception {
     		
     		dbConnection();
@@ -235,7 +255,7 @@ public class ReadingFiles
 		            index = resultSet.getString("FileIndex");
 		    }
 		    
-		    System.out.println(index);
+		    //System.out.println(index);
     		String insertSQL = "insert into tag (FileID, Tag) values (?,?)";
     		preparedStatement = connect.prepareStatement(insertSQL);
     		preparedStatement.setString(1,index);
@@ -244,7 +264,75 @@ public class ReadingFiles
 		    
     		dbClose();	    	            
     	}
+    	
+    	public static void editTag(ArrayList a) throws Exception{
+    		dbConnection();
     		
+    		/*select tagid from tag, file where tag = 'b' and file.directory like '%competitors%' and file.directory like '%acxiom%' and file.fileIndex = tag.fileid
+
+UPDATE tag   
+SET tag='b'
+WHERE tagid = 4; */
+    		//name,name,tagnow,changetagto
+    		String dir1, dir2, tagnow, changeto;
+    		dir1 = a.get(0).toString();
+    		dir2 = a.get(1).toString();
+    		tagnow = a.get(2).toString();
+    		changeto = a.get(3).toString();
+    		
+    		String selectSQL = "select tagid from tag, file where tag = '"+ tagnow + "' and file.directory like '%" + dir2 + "%' and file.directory like '%" + dir2 + "%' and file.fileIndex = tag.fileid";
+            preparedStatement = connect.prepareStatement(selectSQL);
+            //preparedStatement.setString(1, TagName);
+            
+            resultSet = preparedStatement.executeQuery();
+            ArrayList arrayList = new ArrayList();
+            
+            while(resultSet.next()) {
+                    arrayList.add(resultSet.getString("tagid"));
+                   // System.out.println(arrayList);
+
+                
+            }
+            String arrayListString = arrayList.get(0).toString();
+            String updateSQL = "UPDATE tag SET tag='"+ changeto +"' WHERE tagid =  " + arrayListString;
+            
+            preparedStatement = connect.prepareStatement(updateSQL);
+    		preparedStatement.executeUpdate();
+    	}	
+    	
+    	
+    	
+    	public static void deleteTag(ArrayList a) throws Exception{
+    		dbConnection();
+    		
+    		
+    		String dir1, dir2, tagnow, changeto;
+    		dir1 = a.get(0).toString();
+    		dir2 = a.get(1).toString();
+    		tagnow = a.get(2).toString();
+    		
+    		
+    		String selectSQL = "select tagid from tag, file where tag = '"+ tagnow + "' and file.directory like '%" + dir2 + "%' and file.directory like '%" + dir2 + "%' and file.fileIndex = tag.fileid";
+            preparedStatement = connect.prepareStatement(selectSQL);
+            
+            
+            resultSet = preparedStatement.executeQuery();
+            ArrayList arrayList = new ArrayList();
+            
+            while(resultSet.next()) {
+                    arrayList.add(resultSet.getString("tagid"));
+                   
+
+                
+            }
+            String arrayListString = arrayList.get(0).toString();
+            //delete from orders 
+            //where id_users = 1
+            String deleteSQL = "delete from tag where tagid = '"+ arrayListString +"'";
+            
+            preparedStatement = connect.prepareStatement(deleteSQL);
+    		preparedStatement.executeUpdate();
+    	}	
     	
     	
 

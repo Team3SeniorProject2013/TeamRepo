@@ -8,6 +8,8 @@ import javax.swing.JTabbedPane;
 import java.awt.Label;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -41,7 +43,7 @@ public class KnowledgeManagerGUI extends JFrame {
 
         private JPanel contentPane;
         private JTextField SelectRootDirtextField;
-        private JTextField AddTagstextField_1;
+        private static JTextField AddTagstextField_1;
         private JTextField textField_2;
         private  Checkbox update_checkbox;
         String root;
@@ -168,24 +170,10 @@ public class KnowledgeManagerGUI extends JFrame {
                 btnNewButton.addActionListener(new ActionListener() {
                 	public void actionPerformed(ActionEvent arg0) {
                 		
-                		String fileName = null;
-                		String parentName = null;
-                		String tagName = null;
-                		TreePath treepath = tree.getSelectionPath();
+                		addingTag();
                 		
-                		Object[] c = treepath.getPath();
-                		
-                		fileName = c[c.length-1].toString();
-                		parentName = c[c.length-2].toString();
-                		tagName = AddTagstextField_1.getText();
-                		
-                		try{
-                			ReadingFiles.addTagstoDB(tagName, parentName, fileName);
-                		}
-                		catch(Exception e)
-                		{
-                			System.out.println(e);
-                		}
+                		taglist = new JList(returnTags().toArray());
+                		tagScrollPane.setViewportView(taglist);
                 			
                 	}
                 });
@@ -193,17 +181,66 @@ public class KnowledgeManagerGUI extends JFrame {
                 panel.add(btnNewButton);    
                 
                 JButton btnNewButton_1 = new JButton("Edit");
+                btnNewButton_1.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent arg0) {
+                		
+                		
+                		String test1 = null;
+                        test1= JOptionPane.showInputDialog("What would you like to change it to?");
+                        //System.out.println(test1);
+                        ArrayList a = new ArrayList();
+                        a = getJTreeInfo();
+                        
+                        a.add(taglist.getSelectedValue().toString());
+                        a.add(test1);
+                        System.out.println(a);
+                        if(test1 != null) {
+                        	
+                        	try {
+								ReadingFiles.editTag(a);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                        	
+                        	
+                        	
+                        }
+                        
+                        
+                	}
+                });
                 btnNewButton_1.setBounds(233, 391, 89, 23);
                 panel.add(btnNewButton_1);
                 
                 JButton btnDelete = new JButton("Delete");
                 btnDelete.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                         
+                        	
+                            
+                            
+                            ArrayList a = new ArrayList();
+                            a = getJTreeInfo();
+                            
+                            a.add(taglist.getSelectedValue().toString());
+                            
+                            
+                            
+                            	
+                            	try {
+    								ReadingFiles.deleteTag(a);
+    							} catch (Exception e) {
+    								// TODO Auto-generated catch block
+    								e.printStackTrace();
+    							}
+                            	
+                            	
+                            	
+                            }
                         
                         
                         }
-                });
+                );
                 btnDelete.setBounds(344, 391, 89, 23);
                 panel.add(btnDelete);
                 
@@ -452,5 +489,46 @@ public class KnowledgeManagerGUI extends JFrame {
 			}
     		
     		return tagNames;
+        }
+        
+        public static void addingTag()
+        {
+        	String fileName = null;
+    		String parentName = null;
+    		String tagName = null;
+    		TreePath treepath = tree.getSelectionPath();
+    		
+    		Object[] c = treepath.getPath();
+    		
+    		fileName = c[c.length-1].toString();
+    		parentName = c[c.length-2].toString();
+    		tagName = AddTagstextField_1.getText();
+    		
+    		try{
+    			ReadingFiles.addTagstoDB(tagName, parentName, fileName);
+    		}
+    		catch(Exception e)
+    		{
+    			System.out.println(e);
+    		}
+        }
+        
+        public static ArrayList getJTreeInfo() {
+        	String fileName = null;
+    		String parentName = null;
+    		String tagName = null;
+    		TreePath treepath = tree.getSelectionPath();
+    		
+    		Object[] c = treepath.getPath();
+    		
+    		fileName = c[c.length-1].toString();
+    		parentName = c[c.length-2].toString();
+    		
+    		ArrayList a = new ArrayList();
+    		a.add(fileName);
+    		a.add(parentName);
+    		
+    		return a;
+    		
         }
 }
