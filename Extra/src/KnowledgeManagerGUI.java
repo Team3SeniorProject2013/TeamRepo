@@ -25,6 +25,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.AbstractListModel;
 import java.awt.Font;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JTextArea;
@@ -34,6 +35,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.JScrollBar;
+
+import java.awt.Desktop;
 import java.awt.Panel;
 import java.awt.Checkbox;
 import java.awt.Component;
@@ -307,9 +310,9 @@ public class KnowledgeManagerGUI extends JFrame {
 					for(int ab = 0; ab < a.size(); ab++) {
 						//abc.add(a.get(ab));
 						StringBuilder build = new StringBuilder();
-						build.append(a.get(ab));
+						//build.append(a.get(ab));
 						ab++;
-						build.append(" ");
+						//build.append(" ");
 						build.append(a.get(ab));
 						ab++;
 						//build.append(a.get(ab));
@@ -353,6 +356,19 @@ public class KnowledgeManagerGUI extends JFrame {
 				
 				list_2 = new JList();
 				scrollPane_2.setViewportView(list_2);
+				
+				JButton btnOpenFile = new JButton("Open File");
+				btnOpenFile.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						//(list_2.getSelectedValue().toString());
+						try {
+					        File myFile = new File(list_2.getSelectedValue().toString());
+					        Desktop.getDesktop().open(myFile);
+					    } catch (IOException ex) {
+					}
+					}});
+				btnOpenFile.setBounds(278, 23, 89, 23);
+				panel_1.add(btnOpenFile);
 
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("List", null, panel_2, null);
