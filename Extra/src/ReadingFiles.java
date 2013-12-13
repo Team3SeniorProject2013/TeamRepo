@@ -93,13 +93,14 @@ public class ReadingFiles
       {
           if (listOfFiles[i].isFile()) 
           {
-              System.out.println("File:\t" + listOfFiles[i].getName());                                                 //displays name of file
-              System.out.println("Path:\t" + listOfFiles[i].getPath());                                                //displays file path
+        	  System.out.println("Uploading to database: "+listOfFiles[i].getName());
+        	  //System.out.println("File:\t" + listOfFiles[i].getName());                                                 //displays name of file
+             // System.out.println("Path:\t" + listOfFiles[i].getPath());                                                //displays file path
               //System.out.println("Parent:\t" + listOfFiles[i].getParentFile());                                //displays directory path
               //System.out.println("Parent:\t" + listOfFiles[i].getParentFile().getName());                // display parent file name
-              System.out.println("Size:\t"+listOfFiles[i].length());                                                //display file size
-              System.out.println("Date Modified:\t"+ dateFormat.format(listOfFiles[i].lastModified())); //display date modified
-              System.out.println(" ");
+             // System.out.println("Size:\t"+listOfFiles[i].length());                                                //display file size
+             // System.out.println("Date Modified:\t"+ dateFormat.format(listOfFiles[i].lastModified())); //display date modified
+             // System.out.println(" ");
               
               extension = "";
 

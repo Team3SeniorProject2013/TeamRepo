@@ -20,7 +20,7 @@ public class JTreeOne {
 		Scanner input = new Scanner(System.in);
 
 
-    	System.out.println("Please enter root path:");
+    	//System.out.println("Please enter root path:");
     	String root = input.nextLine();
 
     	File rootFolder = new File(root);
@@ -53,7 +53,7 @@ public class JTreeOne {
 	    {
 	    	DefaultMutableTreeNode fileNode = null;
 	    	
-	    	System.out.println(listOfFiles[i].getPath());
+	    	//System.out.println(listOfFiles[i].getPath());
 	    	
 	    	if (listOfFiles[i].isDirectory())
 	        {

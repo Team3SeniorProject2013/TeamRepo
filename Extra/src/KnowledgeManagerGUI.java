@@ -107,7 +107,7 @@ public class KnowledgeManagerGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				roots = SelectRootDirtextField.getText();
-				System.out.println(SelectRootDirtextField.getText());
+				//System.out.println(SelectRootDirtextField.getText());
 
 				try {
 					if (update_checkbox.getState() == true) {
@@ -195,7 +195,7 @@ public class KnowledgeManagerGUI extends JFrame {
 
 				a.add(taglist.getSelectedValue().toString());
 				a.add(test1);
-				System.out.println(a);
+				//System.out.println(a);
 				if(test1 != null) {
 
 					try {
@@ -304,7 +304,7 @@ public class KnowledgeManagerGUI extends JFrame {
 				textArea.setText("");
 				String tagName;
 				tagName = textField_2.getText();
-				System.out.println(tagName);
+				//System.out.println(tagName);
 				try {
 					ArrayList a = new ArrayList();
 					a = ReadingFiles.returnTagSearch(tagName);
