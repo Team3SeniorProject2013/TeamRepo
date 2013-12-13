@@ -198,7 +198,7 @@ public class ReadingFiles
     	public static ArrayList getAllTag() throws Exception {
     		
     		dbConnection();
-		    String selectSQL = "select tag from tag;";
+		    String selectSQL = "select tag from tag ORDER BY tag;";
 		    preparedStatement = connect.prepareStatement(selectSQL);
 
 		    resultSet = preparedStatement.executeQuery();
@@ -223,6 +223,23 @@ public class ReadingFiles
 		    
 		    while(resultSet.next()) {
 		            arrayList.add(resultSet.getString("tag"));
+		
+		    }
+		    dbClose();
+		    return arrayList;
+		        
+		}  
+    	
+    	public static ArrayList getBookmarks() throws Exception {
+    		
+    		dbConnection();
+		    String selectSQL = "select tag from bookmark;";
+		    
+		    resultSet = preparedStatement.executeQuery();
+		    ArrayList arrayList = new ArrayList();
+		    
+		    while(resultSet.next()) {
+		            arrayList.add(resultSet.getString("bookmark"));
 		
 		    }
 		    dbClose();
