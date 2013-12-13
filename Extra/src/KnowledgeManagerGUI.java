@@ -284,7 +284,7 @@ public class KnowledgeManagerGUI extends JFrame {
 		panel_1.add(lblSearchResult);
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(10, 24, 178, 20);
+		textField_2.setBounds(10, 26, 178, 20);
 		panel_1.add(textField_2);
 		textField_2.setColumns(10);
 
@@ -295,7 +295,7 @@ public class KnowledgeManagerGUI extends JFrame {
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(188, 23, 89, 23);
+		btnSearch.setBounds(193, 25, 89, 23);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//textArea.setText("");
@@ -345,13 +345,9 @@ public class KnowledgeManagerGUI extends JFrame {
 			}
 		});
 		panel_1.add(btnSearch);
-
-		JLabel lblFileNameDirectory = new JLabel("File Name, File Directory Location");
-		lblFileNameDirectory.setBounds(10, 53, 381, 14);
-		panel_1.add(lblFileNameDirectory);
 				
 				scrollPane_2 = new JScrollPane();
-				scrollPane_2.setBounds(10, 78, 449, 335);
+				scrollPane_2.setBounds(10, 64, 449, 349);
 				panel_1.add(scrollPane_2);
 				
 				list_2 = new JList();
@@ -367,7 +363,7 @@ public class KnowledgeManagerGUI extends JFrame {
 					    } catch (IOException ex) {
 					}
 					}});
-				btnOpenFile.setBounds(278, 23, 89, 23);
+				btnOpenFile.setBounds(281, 25, 89, 23);
 				panel_1.add(btnOpenFile);
 
 		JPanel panel_2 = new JPanel();
@@ -450,10 +446,10 @@ public class KnowledgeManagerGUI extends JFrame {
 
 		JList list_1 = new JList();
 		list_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		list_1.setBounds(10, 42, 200, 349);
+		list_1.setBounds(10, 42, 200, 317);
 		panel_4.add(list_1);
 
-		JButton btnSubmit = new JButton("Submit");
+		JButton btnSubmit = new JButton("Search");
 
 		/*
 		 * btnBrowse.addActionListener(new ActionListener() 
@@ -478,7 +474,7 @@ public class KnowledgeManagerGUI extends JFrame {
 			}
 		});
 
-		btnSubmit.setBounds(220, 39, 89, 23);
+		btnSubmit.setBounds(220, 69, 89, 23);
 		panel_4.add(btnSubmit);
 
 		JButton btnAdd = new JButton("Add");
@@ -488,7 +484,7 @@ public class KnowledgeManagerGUI extends JFrame {
 			}
 		});
 
-		btnAdd.setBounds(220, 73, 89, 23);
+		btnAdd.setBounds(220, 103, 89, 23);
 		panel_4.add(btnAdd);
 
 		JButton btnDelete_1 = new JButton("Delete");
@@ -497,8 +493,12 @@ public class KnowledgeManagerGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnDelete_1.setBounds(220, 107, 89, 23);
+		btnDelete_1.setBounds(220, 137, 89, 23);
 		panel_4.add(btnDelete_1);
+		
+		JButton btnViewrefreshBookmark = new JButton("View/Refresh Bookmark");
+		btnViewrefreshBookmark.setBounds(10, 370, 200, 23);
+		panel_4.add(btnViewrefreshBookmark);
 	}
 
 	public static String getRoots() {
