@@ -32,12 +32,7 @@ public class ReadingFiles
          private static ResultSet resultSet = null;  
          
    	public static void main(String[] args) throws Exception {
-		  //jdbcTest dao = new jdbcTest();
-		    //dao.readDataBase();
-		  //addTagstoDB("John","filelist.xml", "Email - re AIMIA_files");
-   		//ArrayList a = new ArrayList();
-   		//a = getEntireTagList();
-   		//System.out.println(a);
+		  
 	  }
     public static void dbConnection() throws Exception{
             Class.forName("com.mysql.jdbc.Driver");
@@ -52,9 +47,6 @@ public class ReadingFiles
     	connect.close();
     }
     
-    	//ArrayList a = new ArrayList();
-    	//a = getAllTag();
-    	//System.out.println(a);
     
     
     public static void readfiles(String root) throws Exception{
@@ -125,13 +117,7 @@ public class ReadingFiles
               //preparedStatement = connect
                //       .prepareStatement("insert into file (filename,directory,filesize,filetype,DateModified) values (?,?,?,?,?)"); 
 
-              /*
-               INSERT INTO file
-              (filename,directory,filesize,filetype,DateModified)
-              SELECT 'advertising', 'javahii', 'advertising', 'advertising','advertising'
-              FROM dual
-              WHERE not exists (select * from file where directory = 'javahii');
-              */
+              
               
               preparedStatement = 
             		  connect.prepareStatement("insert into file (filename,directory,filesize,filetype,DateModified) SELECT ?,?,?,?,? FROM dual WHERE not exists (select * from file where directory = ?)"); 
@@ -268,12 +254,7 @@ public class ReadingFiles
     	public static void editTag(ArrayList a) throws Exception{
     		dbConnection();
     		
-    		/*select tagid from tag, file where tag = 'b' and file.directory like '%competitors%' and file.directory like '%acxiom%' and file.fileIndex = tag.fileid
-
-UPDATE tag   
-SET tag='b'
-WHERE tagid = 4; */
-    		//name,name,tagnow,changetagto
+    		
     		String dir1, dir2, tagnow, changeto;
     		dir1 = a.get(0).toString();
     		dir2 = a.get(1).toString();
