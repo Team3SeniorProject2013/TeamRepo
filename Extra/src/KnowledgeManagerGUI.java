@@ -40,7 +40,7 @@ import java.awt.Desktop;
 import java.awt.Panel;
 import java.awt.Checkbox;
 import java.awt.Component;
-
+//
 //changes
 public class KnowledgeManagerGUI extends JFrame {
 
